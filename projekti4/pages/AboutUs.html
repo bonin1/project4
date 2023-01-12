@@ -301,10 +301,12 @@ function addcomment(){
         if (!Array.isArray(comments)) {
             comments = [];
         }
+        var currentTime = new Date().toLocaleString();
         comments.push({
             name: inputName,
             lastname: inputLastname,
-            comment: inputComment
+            comment: inputComment,
+            time: currentTime
         });
         localStorage.setItem("comments", JSON.stringify(comments));
         update();
@@ -327,26 +329,42 @@ function update(){
         commentDiv.setAttribute("id", index);
         cardComment.appendChild(commentDiv);
 
+        var nameDiv = document.createElement('div');
+        nameDiv.classList.add('nameDiv');
+        commentDiv.appendChild(nameDiv);
+
+        var structure = document.createElement('div')
+        structure.classList.add('structure')
+        nameDiv.appendChild(structure)
+
+        var paragraph = document.createElement('div');
+        paragraph.classList.add('paragraph');
+        commentDiv.appendChild(paragraph);
+
         var emri = document.createElement('h3');
         emri.classList.add('Emri-comment')
         emri.innerHTML = comment.name;
-        commentDiv.appendChild(emri);
-
+        structure.appendChild(emri);
 
         var lastname = document.createElement('h3');
         lastname.classList.add('lastname-comment')
         lastname.innerHTML = comment.lastname;
-        commentDiv.appendChild(lastname);
+        structure.appendChild(lastname);
 
         var commentTxt = document.createElement('p');
         commentTxt.classList.add('paragraph-comment')
         commentTxt.innerHTML = comment.comment;
-        commentDiv.appendChild(commentTxt);
+        paragraph.appendChild(commentTxt);
+
+        var time = document.createElement('p');
+        time.classList.add('time-comment')
+        time.innerHTML = comment.time;
+        paragraph.appendChild(time);
 
         var deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete-comment')
         deleteBtn.innerHTML = "X";
-        commentDiv.appendChild(deleteBtn);
+        nameDiv.appendChild(deleteBtn);
 
         deleteBtn.addEventListener("click", function(){
             deleteComment(index);

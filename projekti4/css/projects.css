@@ -675,7 +675,17 @@ footer .map iframe {
         .header .menu-overlay.active{
         visibility: visible;
         opacity: 1;
-    }
+        }
+        .mainDiv-recent-projectH1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .mainDiv-recent-projectH1 h1 {
+            position: relative;
+            top: 50px;
+        }
         .header .nav-menu{
             position: fixed;
             right: -280px;
