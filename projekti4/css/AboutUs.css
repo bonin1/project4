@@ -331,9 +331,16 @@ footer .map iframe {
     width: 100%;
     height: 100%;
 }
+tbody{
+    height: 100%;
+}
 th{
-    border: 1px solid gray;
+    border-bottom: 1px solid gray;
     text-align: center;
+    width: 33%;
+}
+.t-head{
+    border-right: 1px solid gray;
 }
 
 .table-div{
@@ -352,6 +359,27 @@ th{
     text-align: center;
     border-bottom: 1px solid gray;
     padding: 10px;
+    margin: 0;
+    background-color: #0f4c5c;
+    border-radius: 15px 15px 0 0;
+    color: white;
+}
+td{
+    height: 20%;
+    padding: 10px;
+}
+
+table{
+    height: 100%;
+}
+
+.t-row{
+    border-bottom: 1px solid black;
+}
+
+.texti{
+    border-left: 1px solid gray;
+    
 }
 
 
@@ -475,6 +503,7 @@ th{
 .structure h3{
     margin: 10px;
     color: #0e6ba8;
+    text-transform: capitalize;
 }
 .nameDiv button{
     color: #fff;
@@ -504,6 +533,7 @@ th{
 
 /* RESPONSIVE */
 @media(min-width: 992px){
+    
     .header .menu > .menu-item-has-children:hover > .sub-menu{
         transform: translateY(0);
         opacity: 1;
@@ -583,6 +613,7 @@ th{
     /* responsive */
     /* RESPONSIVE WITH MIN-WIDTH 991PX */
     @media(max-width: 991px){
+        
         .header .logo a img {
             width: 11rem;
             margin-right: 150px;
@@ -672,8 +703,19 @@ th{
         .aboutus {
             margin: 0px;
             text-align: center;
-            height: 300px;
             margin-top: 100px;
+            height: 55rem;
+        }
+        .AboutUs-P{
+            height: 21rem;
+        }
+        .table-first{
+            display: flex;
+            flex-direction: column;
+        }
+        .table-div{
+            margin: 0;
+            margin-top: 50px;
         }
         .header .logo a img {
             width: 11rem;
@@ -769,6 +811,7 @@ th{
         }
         .add-comment{
             margin: 0 !important;
+            
         }
         .input-group{
             width: 100%;
@@ -803,6 +846,7 @@ th{
         .AddComment-input{
             margin: 0 !important;
         }
+        
     }
     /* RESPONSIVE WITH 991PX */
     
