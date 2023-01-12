@@ -257,9 +257,7 @@ a{
     height: 700px;
 }
 .mainDiv-recent-projectH1 {
-    position: relative;
-    left: 90px;
-    top: 40px;
+    margin: 50px 110px;
     display: inline-block;
     color: #0f4c5c;
 }
