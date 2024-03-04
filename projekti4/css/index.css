@@ -510,7 +510,12 @@ footer {
     align-items: center;
     flex-direction: row;
 }
-
+footer .logo-social-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 footer .logo-footer img {
     width: 15rem;
     padding-bottom: 10px;
@@ -520,10 +525,8 @@ footer .social-footer a ion-icon{
     text-decoration: none;
     color: #000;
     font-size: 40px;
-    margin-left: 30px;
-    position: relative;
-    left: 20px;
-    bottom: 20px;
+    margin: 10px;
+    margin-top: 0px;
 }
 
 footer .contact-us .div-tel-email a{
