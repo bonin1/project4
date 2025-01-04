@@ -2,12 +2,17 @@
 
 import React from "react";
 import Navbar from "./components/globalComponents/Navbar";
+import ImageCarousel from "./components/Home/ImageCarousel/ImageCarousel";
 
 export default function Home() {
   return (
     <div>
       <Navbar />
-      <h1>TESTING</h1>
+      <main className="wrapper">
+        <div className="wrapper-assist">
+          <ImageCarousel />
+        </div>
+      </main>
     </div>
   );
 }

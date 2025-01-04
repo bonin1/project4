@@ -8,9 +8,15 @@ import './Navbar.scss';
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const pathname = usePathname();
 
     const isActive = (path: string) => pathname === path;
+
+    const toggleDropdown = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setDropdownOpen(!dropdownOpen);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -21,9 +27,26 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        const closeMenu = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target.closest('.navbar') && isMenuOpen) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('click', closeMenu);
+        return () => document.removeEventListener('click', closeMenu);
+    }, [isMenuOpen]);
+
+    useEffect(() => {
+        setIsMenuOpen(false);
+        setDropdownOpen(false);
+    }, [pathname]);
+
     return (
-        <nav className={`navbar navbar-expand-lg fixed-top ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="container">
+        <nav className={`navbar navbar-expand-lg ${isScrolled ? 'scrolled' : ''}`}>
+            <div className="container-navbar">
                 <Link href="/" className="navbar-brand">
                     <img src="/4564931.png" alt="Main Logo" />
                 </Link>
@@ -42,7 +65,7 @@ const Navbar = () => {
                     </div>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarNav">
+                <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
                             <Link href="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Home</Link>
@@ -55,15 +78,15 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item dropdown">
                             <a 
-                                className="nav-link dropdown-toggle" 
+                                className={`nav-link dropdown-toggle ${dropdownOpen ? 'show' : ''}`}
                                 href="#" 
                                 id="navbarDropdown" 
                                 role="button" 
-                                data-bs-toggle="dropdown"
+                                onClick={toggleDropdown}
                             >
                                 Contact
                             </a>
-                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <ul className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
                                 <li>
                                     <a className="dropdown-item" href="mailto:example@example.com">
                                         <i className="fas fa-envelope"></i>
