@@ -16,6 +16,8 @@ const ImageCarousel = () => {
             content: (
                 <div className="slide-content">
                     <p>test</p>
+                    <h1>TESTING</h1>
+                    <button className='btn btn-success'>Read more</button>
                 </div>
             )
         },

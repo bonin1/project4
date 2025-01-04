@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 
 
     &.scrolled {
@@ -21,6 +22,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        z-index: 999;
     }
 }
 
@@ -81,6 +83,7 @@
     right: 0;  
     left: auto !important;  
     transform-origin: top right; 
+    z-index: 999;
 
     .dropdown-item {
         border-radius: 8px;
