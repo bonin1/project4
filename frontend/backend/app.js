@@ -2,24 +2,17 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const path = require('path');
-
 const cors = require('cors');
-
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-    ? ['https://productiondomain.com'] 
-    : ['http://localhost:3000'];
+const cookieParser = require('cookie-parser'); 
 
 app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
+    origin: 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 3001;
 
@@ -45,6 +38,11 @@ app.use('/admin', adminRoutes);
 
 
 // ------------------ Importing routes ------------------
+
+
+app.get('/', (req, res) => {
+    res.render('test');
+});
 
 
 app.listen(PORT, () => {

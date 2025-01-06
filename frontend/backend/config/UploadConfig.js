@@ -10,13 +10,15 @@ const fileFilter = (req, file, cb) => {
         'video/mp4',
         'video/mpeg',
         'video/quicktime',
-        'video/x-msvideo'
+        'video/x-msvideo',
+        'application/pdf',
+        'application/msword',
     ];
     
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error('Invalid file type. Allowed types: JPEG, PNG, GIF, MP4, MPEG, MOV, AVI'), false);
+        cb(new Error('Invalid file type. Allowed types: JPEG, PNG, GIF, MP4, MPEG, MOV, AVI, PDF, DOC'), false);
     }
 };
 

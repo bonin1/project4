@@ -12,17 +12,17 @@ const ProjectMedia = db.define('ProjectMedia', {
         type: sequelize.BLOB('long'),
         allowNull: false
     },
-    aditional_images:{
+    additional_images:{
         type: sequelize.BLOB('long'),
         allowNull: true
     },
     Video: {
         type: sequelize.BLOB('long'),
-        allowNull: false
+        allowNull: true
     },
     Document: {
         type: sequelize.BLOB('long'),
-        allowNull: false
+        allowNull: true
     },
     MediaType: {
         type: sequelize.ENUM('Image', 'Video', 'Document'),
