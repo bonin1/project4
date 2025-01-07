@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminAPI } from '../../service/API';
+import CreateProjectForm from '../components/dashboardComponents/CreateProjectForm';
 
 const DashboardPage = () => {
     const router = useRouter();
@@ -31,6 +32,7 @@ const DashboardPage = () => {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold text-center mt-10">Dashboard</h1>
+            <CreateProjectForm />
         </div>
     );
 }

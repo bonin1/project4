@@ -1,7 +1,6 @@
 const ProjectModel = require('../../models/ProjectModel');
 const ProjectMedia = require('../../models/ProjectMedia');
-
-// error on image handling
+const ProjectAdditionalMedia = require('../../models/ProjectAdditionalMedia');
 
 exports.CreateProject = async (req, res) => {
     try {
@@ -31,56 +30,39 @@ exports.CreateProject = async (req, res) => {
         });
 
         if (req.files) {
-            const mediaPromises = [];
-
-            // Handle main image
-            if (req.files.Image) {
-                mediaPromises.push(
-                    ProjectMedia.create({
-                        Image: req.files.Image[0].buffer,
-                        MediaType: 'Image',
-                        ProjectID: newProject.ProjectID
-                    })
-                );
-            }
-
-            // Handle additional images
-            if (req.files.adidtional_images) {
-                req.files.adidtional_images.forEach(file => {
-                    mediaPromises.push(
-                        ProjectMedia.create({
-                            additional_images: file.buffer,
-                            MediaType: 'Image',
-                            ProjectID: newProject.ProjectID
-                        })
-                    );
+            if (req.files.primary_image && req.files.primary_image[0]) {
+                await ProjectMedia.create({
+                    ProjectID: newProject.ProjectID,
+                    primary_image: req.files.primary_image[0].buffer,
+                    MediaType: 'Image'
                 });
             }
 
-            // Handle video
-            if (req.files.Video) {
-                mediaPromises.push(
-                    ProjectMedia.create({
-                        Video: req.files.Video[0].buffer,
-                        MediaType: 'Video',
-                        ProjectID: newProject.ProjectID
+            if (req.files.additional_images) {
+                const additionalImagesPromises = req.files.additional_images.map(file => 
+                    ProjectAdditionalMedia.create({
+                        ProjectID: newProject.ProjectID,
+                        additional_images: file.buffer,
+                        MediaType: 'Image'
                     })
                 );
+                await Promise.all(additionalImagesPromises);
             }
 
-            // Handle document
-            if (req.files.Document) {
-                mediaPromises.push(
-                    ProjectMedia.create({
-                        Document: req.files.Document[0].buffer,
-                        MediaType: 'Document',
-                        ProjectID: newProject.ProjectID
-                    })
-                );
+            if (req.files.Video && req.files.Video[0]) {
+                await ProjectMedia.create({
+                    ProjectID: newProject.ProjectID,
+                    Video: req.files.Video[0].buffer,
+                    MediaType: 'Video'
+                });
             }
 
-            if (mediaPromises.length > 0) {
-                await Promise.all(mediaPromises);
+            if (req.files.Document && req.files.Document[0]) {
+                await ProjectMedia.create({
+                    ProjectID: newProject.ProjectID,
+                    Document: req.files.Document[0].buffer,
+                    MediaType: 'Document'
+                });
             }
         }
 
@@ -96,4 +78,4 @@ exports.CreateProject = async (req, res) => {
             message: error.message
         });
     }
-}
+};

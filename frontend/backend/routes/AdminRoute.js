@@ -8,8 +8,8 @@ const { verifyToken } = require('../middleware/authMiddleware');
 const { VerifyTokenPath } = require('../controllers/UserAuth/VerifyToken');
 
 const uploadFields = [
-    { name: 'Image', maxCount: 1 },
-    { name: 'aditional_images', maxCount: 5 },
+    { name: 'primary_image', maxCount: 1 },
+    { name: 'additional_images', maxCount: 5 },
     { name: 'Video', maxCount: 1 },
     { name: 'Document', maxCount: 1 }
 ];

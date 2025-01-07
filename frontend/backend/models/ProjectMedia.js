@@ -8,11 +8,7 @@ const ProjectMedia = db.define('ProjectMedia', {
         primaryKey: true,
         autoIncrement: true
     },
-    Image: {
-        type: sequelize.BLOB('long'),
-        allowNull: false
-    },
-    additional_images:{
+    primary_image: {
         type: sequelize.BLOB('long'),
         allowNull: true
     },
@@ -34,7 +30,8 @@ const ProjectMedia = db.define('ProjectMedia', {
         references: {
             model: ProjectModel,
             key: 'ProjectID'
-        }
+        },
+        onDelete: 'CASCADE'
     }
 }, {
     freezeTableName: true
