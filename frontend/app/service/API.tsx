@@ -45,6 +45,32 @@ export const adminAPI = {
                 error: error.response?.data?.message || "Failed to create project"
             };
         }
+    },
+    getProjects: async () => {
+        try {
+            const response = await API.get('/projects');
+            return { success: true, data: response.data };
+        } catch (error: any) {
+            return {
+                success: false,
+                error: error.response?.data?.message || "Failed to fetch projects"
+            };
+        }
+    },
+    editProject: async (id: string, formData: FormData) => {
+        try {
+            const response = await API.put(`/admin/edit-project/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            return { success: true, data: response.data };
+        } catch (error: any) {
+            return {
+                success: false,
+                error: error.response?.data?.message || "Failed to edit project"
+            };
+        }
     }
 };
 

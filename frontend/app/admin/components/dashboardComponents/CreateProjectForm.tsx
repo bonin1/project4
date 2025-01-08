@@ -1,16 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { adminAPI } from '../../../service/API';
-
-interface FileState {
-    primary_image: File | null;
-    additional_images: File[];
-    Video: File | null;
-    Document: File | null;
-}
+import { ProjectFormFields } from '../shared/ProjectFormFields';
+import { ProjectFileInputs } from '../shared/ProjectFileInputs';
+import { ProjectFormData, FileState } from '../../types/project';
 
 const CreateProjectForm = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ProjectFormData>({
         ProjectName: '',
         ProjectDescription: '',
         ClientName: '',
@@ -63,12 +59,10 @@ const CreateProjectForm = () => {
 
         const submitFormData = new FormData();
         
-        // Append text fields
         Object.entries(formData).forEach(([key, value]) => {
             submitFormData.append(key, value);
         });
 
-        // Append files
         if (files.primary_image) submitFormData.append('primary_image', files.primary_image);
         if (files.additional_images.length) {
             files.additional_images.forEach(file => {
@@ -82,7 +76,6 @@ const CreateProjectForm = () => {
             const response = await adminAPI.createProject(submitFormData);
             if (response.success) {
                 setMessage({ type: 'success', content: 'Project created successfully!' });
-                // Reset form
                 setFormData({
                     ProjectName: '',
                     ProjectDescription: '',
@@ -111,188 +104,45 @@ const CreateProjectForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 space-y-4">
-            <h2 className="text-2xl font-bold mb-4">Create New Project</h2>
-            
-            {message.content && (
-                <div className={`p-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                    {message.content}
+        <div className="container py-4">
+            <form onSubmit={handleSubmit} className="card">
+                <div className="card-header bg-primary text-white">
+                    <h2 className="h4 mb-0">Create New Project</h2>
                 </div>
-            )}
 
-            <div className="space-y-4">
-                <div>
-                    <label className="block mb-1">Project Name</label>
-                    <input
-                        type="text"
-                        name="ProjectName"
-                        value={formData.ProjectName}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border rounded"
-                        required
+                {message.content && (
+                    <div className={`alert ${message.type === 'success' ? 'alert-success' : 'alert-danger'} m-3`}>
+                        {message.content}
+                    </div>
+                )}
+
+                <div className="card-body">
+                    <ProjectFormFields 
+                        formData={formData}
+                        handleInputChange={handleInputChange}
+                    />
+                    <ProjectFileInputs
+                        files={files}
+                        handleFileChange={handleFileChange}
                     />
                 </div>
 
-                <div>
-                    <label className="block mb-1">Project Description</label>
-                    <textarea
-                        name="ProjectDescription"
-                        value={formData.ProjectDescription}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border rounded"
-                        rows={4}
-                        required
-                    />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block mb-1">Client Name</label>
-                        <input
-                            type="text"
-                            name="ClientName"
-                            value={formData.ClientName}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Project Manager</label>
-                        <input
-                            type="text"
-                            name="ProjectManager"
-                            value={formData.ProjectManager}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Start Date</label>
-                        <input
-                            type="date"
-                            name="StartDate"
-                            value={formData.StartDate}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">End Date</label>
-                        <input
-                            type="date"
-                            name="EndDate"
-                            value={formData.EndDate}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Budget</label>
-                        <input
-                            type="number"
-                            name="budget"
-                            value={formData.budget}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Location</label>
-                        <input
-                            type="text"
-                            name="Location"
-                            value={formData.Location}
-                            onChange={handleInputChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <label className="block mb-1">Status</label>
-                    <select
-                        name="Status"
-                        value={formData.Status}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border rounded"
-                        required
+                <div className="card-footer">
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn btn-primary w-100"
                     >
-                        <option value="">Select Status</option>
-                        <option value="Planning">Planning</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                        <option value="On Hold">On Hold</option>
-                    </select>
+                        {loading ? (
+                            <span>
+                                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Creating Project...
+                            </span>
+                        ) : 'Create Project'}
+                    </button>
                 </div>
-
-                <div className="space-y-4">
-                    <div>
-                        <label className="block mb-1">Primary Image</label>
-                        <input
-                            type="file"
-                            name="primary_image"
-                            onChange={handleFileChange}
-                            accept="image/*"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Additional Images (up to 5)</label>
-                        <input
-                            type="file"
-                            name="additional_images"
-                            onChange={handleFileChange}
-                            accept="image/*"
-                            multiple
-                            max="5"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Video</label>
-                        <input
-                            type="file"
-                            name="Video"
-                            onChange={handleFileChange}
-                            accept="video/*"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-1">Document</label>
-                        <input
-                            type="file"
-                            name="Document"
-                            onChange={handleFileChange}
-                            accept=".pdf,.doc,.docx"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
-            >
-                {loading ? 'Creating Project...' : 'Create Project'}
-            </button>
-        </form>
+            </form>
+        </div>
     );
 };
 

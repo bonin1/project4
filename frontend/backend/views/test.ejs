@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Projects</title>
 </head>
 <body>
-    
+    <% projects.forEach(project => { %>
+        <h1><%= project.ProjectName %></h1>
+        <p><%= project.ProjectDescription %></p>
+        <% if (project.primary_image) { %>
+            <img src="<%= project.primary_image %>" alt="<%= project.ProjectName %>">
+        <% } %>
+        <% if (project.additional_images && project.additional_images.length > 0) { %>
+            <div class="additional-images">
+                <% project.additional_images.forEach(image => { %>
+                    <img src="<%= image.base64Image %>" alt="Additional image">
+                <% }) %>
+            </div>
+        <% } %>
+    <% }) %>
 </body>
 </html>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const upload = require('../config/UploadConfig');
 const { UserLogin } = require('../controllers/UserAuth/Login');
-const { CreateProject } = require('../controllers/Projects/CRUDoperations');
+const { CreateProject, EditProject } = require('../controllers/Projects/CRUDoperations');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { VerifyTokenPath } = require('../controllers/UserAuth/VerifyToken');
 
@@ -15,6 +15,8 @@ const uploadFields = [
 ];
 
 router.post('/create-project', upload.fields(uploadFields), CreateProject);
+
+router.put('/edit-project/:id', upload.fields(uploadFields), EditProject);
 
 router.post('/login', UserLogin);
 

@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminAPI } from '../../service/API';
 import CreateProjectForm from '../components/dashboardComponents/CreateProjectForm';
+import DashboardSidebar from '../components/dashboardComponents/DashboardSidebar';
+import EditProjectList from '../components/dashboardComponents/EditProjectList';
 
 const DashboardPage = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
+    const [activeComponent, setActiveComponent] = useState<string | null>(null);
 
     useEffect(() => {
         const verifyAuth = async () => {
@@ -26,13 +29,37 @@ const DashboardPage = () => {
     }, [router]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
     }
 
+    const renderComponent = () => {
+        switch (activeComponent) {
+            case 'createProject':
+                return <CreateProjectForm />;
+            case 'editProject':
+                return <EditProjectList />;
+            default:
+                return (
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                        <h2 className="text-muted">Select an option from the sidebar</h2>
+                    </div>
+                );
+        }
+    };
+
     return (
-        <div className="container mx-auto">
-            <h1 className="text-2xl font-bold text-center mt-10">Dashboard</h1>
-            <CreateProjectForm />
+        <div className="min-h-screen d-flex">
+            <DashboardSidebar 
+                activeComponent={activeComponent} 
+                setActiveComponent={setActiveComponent}
+            />
+            <div className="flex-grow-1 bg-light p-4">
+                {renderComponent()}
+            </div>
         </div>
     );
 }
