@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ImageCarousel.scss';
 
 interface SlideContent {
@@ -27,9 +27,9 @@ const ImageCarousel = () => {
         { image: '/image.png' },
     ];
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => {
         setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    };
+    }, [slides.length]);
 
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
@@ -38,7 +38,7 @@ const ImageCarousel = () => {
     useEffect(() => {
         const timer = setInterval(nextSlide, 10000);
         return () => clearInterval(timer);
-    }, []);
+    }, [nextSlide]);
 
     return (
         <div className="carousel">

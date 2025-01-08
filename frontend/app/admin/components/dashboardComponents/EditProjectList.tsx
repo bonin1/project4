@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { adminAPI } from '../../../service/API';
 import { ProjectFormFields } from '../shared/ProjectFormFields';
 import { ProjectFileInputs } from '../shared/ProjectFileInputs';
-import { Project, ProjectFormData, FileState, ImagePreviews } from '../../types/project';
+import { Project, ProjectFormData, FileState } from '../../types/project';
 
 const EditProjectList = () => {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -11,7 +11,7 @@ const EditProjectList = () => {
     const [error, setError] = useState('');
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [message, setMessage] = useState({ type: '', content: '' });
-    const [editFormData, setEditFormData] = useState({
+    const [editFormData, setEditFormData] = useState<ProjectFormData>({
         ProjectName: '',
         ProjectDescription: '',
         ClientName: '',
@@ -22,9 +22,9 @@ const EditProjectList = () => {
         Location: '',
         ProjectManager: ''
     });
-    const [files, setFiles] = useState({
+    const [files, setFiles] = useState<FileState>({
         primary_image: null,
-        additional_images: [],
+        additional_images: [] as File[],
         Video: null,
         Document: null
     });
@@ -89,10 +89,11 @@ const EditProjectList = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setEditFormData({
-            ...editFormData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setEditFormData(prev => ({
+            ...prev,
+            [name]: name === 'Status' ? (value as ProjectFormData['Status']) : value
+        }));
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +102,7 @@ const EditProjectList = () => {
         if (!fileList) return;
 
         if (name === 'additional_images') {
-            const filesArray = Array.from(fileList).slice(0, 5);
+            const filesArray = Array.from(fileList).slice(0, 5) as File[];
             setFiles(prev => ({
                 ...prev,
                 [name]: filesArray
@@ -127,6 +128,11 @@ const EditProjectList = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!selectedProject) {
+            setMessage({ type: 'error', content: 'No project selected' });
+            return;
+        }
+
         const formData = new FormData();
         
         Object.entries(editFormData).forEach(([key, value]) => {
@@ -142,14 +148,13 @@ const EditProjectList = () => {
         if (files.Video) formData.append('Video', files.Video);
         if (files.Document) formData.append('Document', files.Document);
 
-
         const response = await adminAPI.editProject(selectedProject.ProjectID, formData);
         if (response.success) {
             setMessage({ type: 'success', content: 'Project updated successfully!' });
             fetchProjects();
             setSelectedProject(null);
         } else {
-            setMessage({ type: 'error', content: response.error });
+            setMessage({ type: 'error', content: response.error || 'Failed to edit project'  });
         }
     };
 
@@ -219,7 +224,6 @@ const EditProjectList = () => {
                                         handleInputChange={handleInputChange}
                                     />
                                     <ProjectFileInputs
-                                        files={files}
                                         imagePreviews={imagePreviews}
                                         handleFileChange={handleFileChange}
                                         existingProject={selectedProject}

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {adminAPI} from "../service/API";
-import './page.scss'
+import { adminAPI } from "../service/API";
+import './admin.scss'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ export default function AdminLogin() {
     if (result.success) {
       router.push("/admin/dashboard");
     } else {
-      setError(result.error);
+      setError(result.error || 'Login failed. Please try again.');
     }
   };
 

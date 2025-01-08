@@ -1,9 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { adminAPI } from '../../../service/API';
 import { ProjectFormFields } from '../shared/ProjectFormFields';
 import { ProjectFileInputs } from '../shared/ProjectFileInputs';
-import { ProjectFormData, FileState } from '../../types/project';
+import { ProjectFormData, FileState, ImagePreviews } from '../../types/project';
 
 const CreateProjectForm = () => {
     const [formData, setFormData] = useState<ProjectFormData>({
@@ -25,6 +25,10 @@ const CreateProjectForm = () => {
     });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ type: '', content: '' });
+    const [imagePreviews, setImagePreviews] = useState<ImagePreviews>({
+        primary_image: '',
+        additional_images: []
+    });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
@@ -39,18 +43,44 @@ const CreateProjectForm = () => {
         if (!fileList) return;
 
         if (name === 'additional_images') {
-            const filesArray = Array.from(fileList).slice(0, 5)
+            const filesArray = Array.from(fileList).slice(0, 5);
             setFiles(prev => ({
                 ...prev,
                 [name]: filesArray
+            }));
+            // Generate previews for additional images
+            const previews = filesArray.map(file => URL.createObjectURL(file));
+            setImagePreviews(prev => ({
+                ...prev,
+                additional_images: previews
             }));
         } else {
             setFiles(prev => ({
                 ...prev,
                 [name]: fileList[0]
             }));
+            // Generate preview for single file
+            if (name === 'primary_image') {
+                const preview = URL.createObjectURL(fileList[0]);
+                setImagePreviews(prev => ({
+                    ...prev,
+                    [name]: preview
+                }));
+            }
         }
     };
+
+    // Clean up object URLs on unmount
+    useEffect(() => {
+        return () => {
+            if (imagePreviews.primary_image) {
+                URL.revokeObjectURL(imagePreviews.primary_image);
+            }
+            imagePreviews.additional_images.forEach(url => {
+                URL.revokeObjectURL(url);
+            });
+        };
+    }, [imagePreviews]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -93,10 +123,14 @@ const CreateProjectForm = () => {
                     Video: null,
                     Document: null
                 });
+                setImagePreviews({
+                    primary_image: '',
+                    additional_images: []
+                });
             } else {
-                setMessage({ type: 'error', content: response.error });
+                setMessage({ type: 'error', content: response.error || 'Failed to create project' });
             }
-        } catch (error) {
+        } catch {
             setMessage({ type: 'error', content: 'Failed to create project' });
         } finally {
             setLoading(false);
@@ -122,7 +156,7 @@ const CreateProjectForm = () => {
                         handleInputChange={handleInputChange}
                     />
                     <ProjectFileInputs
-                        files={files}
+                        imagePreviews={imagePreviews}
                         handleFileChange={handleFileChange}
                     />
                 </div>

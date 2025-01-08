@@ -1,24 +1,40 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { adminAPI } from '../../service/API';
-import CreateProjectForm from '../components/dashboardComponents/CreateProjectForm';
-import DashboardSidebar from '../components/dashboardComponents/DashboardSidebar';
-import EditProjectList from '../components/dashboardComponents/EditProjectList';
+import LoadingSpinner from '../components/dashboardComponents/LoadingSpinner';
+
+const CreateProjectForm = dynamic(
+    () => import('../components/dashboardComponents/CreateProjectForm'),
+    { loading: () => <LoadingSpinner /> }
+);
+
+const DashboardSidebar = dynamic(
+    () => import('../components/dashboardComponents/DashboardSidebar'),
+    { loading: () => <LoadingSpinner /> }
+);
+
+const EditProjectList = dynamic(
+    () => import('../components/dashboardComponents/EditProjectList'),
+    { loading: () => <LoadingSpinner /> }
+);
 
 const DashboardPage = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [activeComponent, setActiveComponent] = useState<string | null>(null);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const verifyAuth = async () => {
             try {
                 const response = await adminAPI.verifyToken();
                 if (!response.success) {
                     router.push('/admin');
                 }
-            } catch (error) {
+            } catch {
                 router.push('/admin');
             } finally {
                 setIsLoading(false);
@@ -28,12 +44,8 @@ const DashboardPage = () => {
         verifyAuth();
     }, [router]);
 
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            </div>
-        );
+    if (!mounted || isLoading) {
+        return <LoadingSpinner />;
     }
 
     const renderComponent = () => {

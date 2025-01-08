@@ -1,8 +1,8 @@
 import React from 'react';
-import { FileState, ImagePreviews } from '../../types/project';
+import { ImagePreviews } from '../../types/project';
+import Image from 'next/image';
 
 interface ProjectFileInputsProps {
-    files: FileState;
     imagePreviews?: ImagePreviews;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     existingProject?: {
@@ -14,7 +14,6 @@ interface ProjectFileInputsProps {
 }
 
 export const ProjectFileInputs: React.FC<ProjectFileInputsProps> = ({
-    files,
     imagePreviews,
     handleFileChange,
     existingProject
@@ -34,11 +33,13 @@ export const ProjectFileInputs: React.FC<ProjectFileInputsProps> = ({
                     />
                     {(imagePreviews?.primary_image || existingProject?.primary_image) && (
                         <div className="mt-2">
-                            <img 
+                            <Image 
                                 src={imagePreviews?.primary_image || existingProject?.primary_image || ''}
                                 alt="Primary"
+                                width={150}
+                                height={150}
                                 className="img-thumbnail"
-                                style={{ maxHeight: '150px' }}
+                                style={{ objectFit: 'cover' }}
                             />
                         </div>
                     )}
@@ -56,22 +57,26 @@ export const ProjectFileInputs: React.FC<ProjectFileInputsProps> = ({
                     />
                     <div className="mt-2 d-flex flex-wrap gap-2">
                         {imagePreviews?.additional_images?.map((preview, index) => (
-                            <img 
+                            <Image 
                                 key={`preview-${index}`}
                                 src={preview}
                                 alt={`Preview ${index + 1}`}
+                                width={100}
+                                height={100}
                                 className="img-thumbnail"
-                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                style={{ objectFit: 'cover' }}
                             />
                         ))}
                         {!imagePreviews?.additional_images?.length && 
                             existingProject?.additional_images?.map((img, index) => (
-                                <img 
+                                <Image 
                                     key={`existing-${index}`}
                                     src={img.base64Image}
                                     alt={`Image ${index + 1}`}
+                                    width={100}
+                                    height={100}
                                     className="img-thumbnail"
-                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                    style={{ objectFit: 'cover' }}
                                 />
                             ))
                         }

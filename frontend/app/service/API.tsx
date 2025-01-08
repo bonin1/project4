@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const API = axios.create({
     baseURL: 'http://localhost:8080',
@@ -8,15 +8,25 @@ const API = axios.create({
     }
 });
 
+interface APIError {
+    response?: {
+        data?: {
+            message?: string;
+        };
+        status?: number;
+    };
+}
+
 export const adminAPI = {
     login: async (email: string, password: string) => {
         try {
             const response = await API.post('/admin/login', { email, password });
             return { success: true, data: response.data };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as APIError;
             return {
                 success: false,
-                error: error.response?.data?.message || "Login failed"
+                error: apiError.response?.data?.message || "Login failed"
             };
         }
     },
@@ -24,10 +34,11 @@ export const adminAPI = {
         try {
             const response = await API.get('/admin/verify-token');
             return { success: true, data: response.data };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as APIError;
             return {
                 success: false,
-                error: error.response?.status === 401 ? 'Authentication required' : 'Verification failed'
+                error: apiError.response?.status === 401 ? 'Authentication required' : 'Verification failed'
             };
         }
     },
@@ -39,10 +50,11 @@ export const adminAPI = {
                 },
             });
             return { success: true, data: response.data };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as APIError;
             return {
                 success: false,
-                error: error.response?.data?.message || "Failed to create project"
+                error: apiError.response?.data?.message || "Failed to create project"
             };
         }
     },
@@ -50,10 +62,11 @@ export const adminAPI = {
         try {
             const response = await API.get('/projects');
             return { success: true, data: response.data };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as APIError;
             return {
                 success: false,
-                error: error.response?.data?.message || "Failed to fetch projects"
+                error: apiError.response?.data?.message || "Failed to fetch projects"
             };
         }
     },
@@ -65,10 +78,11 @@ export const adminAPI = {
                 },
             });
             return { success: true, data: response.data };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as APIError;
             return {
                 success: false,
-                error: error.response?.data?.message || "Failed to edit project"
+                error: apiError.response?.data?.message || "Failed to edit project"
             };
         }
     }
