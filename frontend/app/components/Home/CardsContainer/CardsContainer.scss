@@ -110,7 +110,7 @@
 .project-card {
     flex: 0 0 calc(25% - 1.125rem); 
     min-width: calc(25% - 1.125rem);
-    height: 250px;
+    height: 500px;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
@@ -123,6 +123,10 @@
 
     &:hover {
         transform: scale(1.02);
+    }
+    .project-info{
+        text-shadow: 1px 1px 1px black;
+        padding: 10px;
     }
 }
 

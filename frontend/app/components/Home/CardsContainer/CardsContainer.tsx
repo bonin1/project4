@@ -95,8 +95,8 @@ export default function CompletedProjects() {
                                 }}
                             >
                                 <div className="project-info">
-                                    <h3>{project.ProjectName}</h3>
-                                    <p>{project.Location}</p>
+                                    <h3 className="text-light ">{project.ProjectName}</h3>
+                                    <p className="text-light">{project.Location}</p>
                                 </div>
                             </div>
                         </div>
