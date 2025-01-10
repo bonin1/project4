@@ -1,25 +1,136 @@
-.completedSection {
+.completed-section {
     padding: 2rem 0;
     margin: 2rem 0;
 }
 
-.projectsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
+.projects-container {
+    position: relative;
+    padding: 0 40px;
+    overflow: hidden;
+    width: 100%;
 }
 
-.projectCard {
+.projects-grid {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: opacity 0.3s ease, background 0.3s ease;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    &.prev {
+        left: 0;
+    }
+
+    &.next {
+        right: 0;
+    }
+}
+
+.projects-container:hover .nav-arrow {
+    opacity: 1;
+}
+
+.featured-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    &.prev {
+        left: 10px;
+    }
+
+    &.next {
+        right: 10px;
+    }
+}
+
+.project-card {
+    flex: 0 0 calc(25% - 1.125rem); 
+    min-width: calc(25% - 1.125rem);
     height: 250px;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    opacity: 0.3;
+
+    &.active {
+        opacity: 1;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+    }
 }
 
-.projectCard:hover {
-    transform: scale(1.02);
+.card-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
 .projectInfo {
@@ -42,4 +153,29 @@
     margin: 0.5rem 0 0;
     font-size: 1rem;
     opacity: 0.9;
+}
+
+@media screen and (max-width: 1200px) {
+    .project-card {
+        flex: 0 0 calc(33.333% - 1rem);
+        min-width: calc(33.333% - 1rem);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .project-card {
+        flex: 0 0 calc(50% - 0.75rem);
+        min-width: calc(50% - 0.75rem);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .project-card {
+        flex: 0 0 calc(100% - 0.5rem);
+        min-width: calc(100% - 0.5rem);
+    }
+    
+    .projects-container {
+        padding: 0 20px;
+    }
 }
