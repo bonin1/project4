@@ -1,0 +1,264 @@
+.milestones-section {
+    padding: 3rem;
+    background: linear-gradient(to bottom, #f8fafc, #ffffff);
+    position: relative;
+
+    .milestone-header {
+        text-align: center;
+        margin-bottom: 6rem;
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, #0ea5e9, #3b82f6);
+            color: white;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px rgba(59,130,246,0.2);
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #64748b;
+            font-size: 1.25rem;
+        }
+    }
+
+    .timeline-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 0;
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, 
+                transparent,
+                #3b82f6 10%,
+                #3b82f6 90%,
+                transparent
+            );
+        }
+
+        .milestone-card {
+            width: 50%;
+            padding: 2rem;
+            position: relative;
+            
+            &.left {
+                left: 0;
+                padding-right: 4rem;
+            }
+
+            &.right {
+                left: 50%;
+                padding-left: 4rem;
+            }
+
+            .milestone-content {
+                background: white;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-10px);
+
+                    .milestone-image {
+                        transform: scale(1.05);
+                    }
+
+                    .image-overlay {
+                        opacity: 0.3;
+                    }
+                }
+
+                .year-marker {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 100;
+
+                    .left & {
+                        right: -1rem;
+                    }
+
+                    .right & {
+                        left: -1rem;
+                    }
+
+                    .year {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: #3b82f6;
+                        color: white;
+                        padding: 0.5rem 1rem;
+                        border-radius: 100px;
+                        font-weight: 600;
+
+                        .left & {
+                            right: 3rem;
+                        }
+
+                        .right & {
+                            left: 3rem;
+                        }
+                    }
+
+                    .dot {
+                        width: 20px;
+                        height: 20px;
+                        background: #3b82f6;
+                        border-radius: 50%;
+                        border: 4px solid white;
+                        box-shadow: 0 0 0 3px #3b82f6;
+                    }
+                }
+
+                .card-body {
+                    .image-container {
+                        position: relative;
+                        height: 250px;
+                        overflow: hidden;
+
+                        .milestone-image {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            transition: transform 0.5s ease;
+                        }
+
+                        .image-overlay {
+                            position: absolute;
+                            inset: 0;
+                            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                        }
+                    }
+
+                    .text-content {
+                        padding: 2rem;
+
+                        h3 {
+                            font-size: 1.5rem;
+                            color: #1e293b;
+                            margin-bottom: 1rem;
+                        }
+
+                        p {
+                            color: #64748b;
+                            line-height: 1.6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .achievement-summary {
+        display: flex;
+        justify-content: center;
+        margin-top: 4rem;
+
+        .summary-card {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+
+            .icon-container {
+                width: 60px;
+                height: 60px;
+                background: #f1f5f9;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                i {
+                    font-size: 1.75rem;
+                    color: #3b82f6;
+                }
+            }
+
+            .summary-content {
+                .number {
+                    display: block;
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    color: #1e293b;
+                    line-height: 1;
+                }
+
+                .label {
+                    color: #64748b;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .milestones-section {
+        padding: 6rem 4rem;
+
+        .timeline-container {
+            .milestone-card {
+                width: 100%;
+                padding: 2rem 0;
+                left: 0 !important;
+
+                .milestone-content {
+                    max-width: 600px;
+                    margin: 0 auto;
+                }
+
+                .year-marker {
+                    left: 50% !important;
+                    transform: translateX(-50%) !important;
+                    top: 0 !important;
+
+                    .year {
+                        left: 50% !important;
+                        transform: translateX(-50%) !important;
+                        top: -3rem !important;
+                    }
+                }
+            }
+
+            .timeline-line {
+                left: 50%;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .milestones-section {
+        padding: 4rem 2rem;
+
+        .milestone-header {
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
+    }
+}

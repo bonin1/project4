@@ -1,13 +1,10 @@
-.completed-section {
-    padding: 2rem 0;
-    margin: 2rem 0;
-}
-
 .projects-container {
     position: relative;
     padding: 0 40px;
     overflow: hidden;
     width: 100%;
+    
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
 }
 
 .projects-grid {

@@ -71,7 +71,7 @@ const Navbar = () => {
                             <Link href="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/about" className={`nav-link ${isActive('/about') ? 'active' : ''}`}>About Us</Link>
+                            <Link href="/about-us" className={`nav-link ${isActive('/about-us') ? 'active' : ''}`}>About Us</Link>
                         </li>
                         <li className="nav-item">
                             <Link href="/projects" className={`nav-link ${isActive('/projects') ? 'active' : ''}`}>Projects</Link>
