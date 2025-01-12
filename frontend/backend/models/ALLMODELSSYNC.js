@@ -2,6 +2,7 @@ const Project = require('./ProjectModel');
 const ProjectMedia = require('./ProjectMedia');
 const UserModel = require('./UserModel');
 const ProjectAdditionalMedia = require('./ProjectAdditionalMedia');
+const ContactModel = require('./ContactModel');
 
 const syncModels = async () => {
     try {
@@ -9,6 +10,7 @@ const syncModels = async () => {
         await ProjectMedia.sync({ force: false });
         await UserModel.sync({ force: false });
         await ProjectAdditionalMedia.sync({ force: false });
+        await ContactModel.sync({ force: false });
         
         console.log('All models synchronized successfully');
     } catch (error) {

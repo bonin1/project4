@@ -1,0 +1,190 @@
+.projects-show {
+    padding: 4rem 0;
+    
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #2a2a2a 0%, #4a4a4a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 3rem;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+        transition: all 0.3s ease;
+    }
+
+    .project-card {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        background: #fff;
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+            .project-overlay {
+                opacity: 1;
+            }
+
+            .project-image {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .project-image {
+        height: 280px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        transition: transform 0.6s ease;
+    }
+
+    .project-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.2) 0%,
+            rgba(0,0,0,0.8) 100%
+        );
+        opacity: 0;
+        transition: all 0.4s ease;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .project-status {
+        align-self: flex-start;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &.completed { background: rgba(25, 135, 84, 0.9); color: white; }
+        &.ongoing { background: rgba(255, 193, 7, 0.9); color: #000; }
+        &.upcoming { background: rgba(13, 110, 253, 0.9); color: white; }
+        &.cancelled { background: rgba(220, 53, 69, 0.9); color: white; }
+        &.planned { background: rgba(108, 117, 125, 0.9); color: white; }
+        &.onhold { background: rgba(255, 159, 26, 0.9); color: #000; }
+    }
+
+    .project-details {
+        color: white;
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                opacity: 0.9;
+
+                i {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .view-project-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(255,255,255,0.25);
+                transform: translateX(5px);
+            }
+
+            i {
+                font-size: 0.9rem;
+                transition: transform 0.3s ease;
+            }
+        }
+    }
+
+    .carousel-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 3rem;
+
+        .control-btn {
+            background: #f8f9fa;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+
+            &:hover:not(:disabled) {
+                background: #007bff;
+                color: white;
+                transform: scale(1.1);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        .page-indicator {
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-show {
+        .projects-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+        }
+
+        .project-image {
+            height: 240px;
+        }
+    }
+}

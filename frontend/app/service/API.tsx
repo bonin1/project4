@@ -88,3 +88,24 @@ export const adminAPI = {
     }
 };
 
+interface ContactFormData {
+    name: string;
+    email: string;
+    message: string;
+}
+
+export const contactAPI = {
+    submit: async (formData: ContactFormData) => {
+        try {
+            const response = await API.post('/api/contact/submit', formData);
+            return { success: true, data: response.data };
+        } catch (error: unknown) {
+            const apiError = error as APIError;
+            return {
+                success: false,
+                error: apiError.response?.data?.message || "Failed to submit contact form"
+            };
+        }
+    }
+};
+

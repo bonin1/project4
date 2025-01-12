@@ -36,6 +36,8 @@ app.use('/projects', projectRoutes);
 const adminRoutes = require('./routes/AdminRoute');
 app.use('/admin', adminRoutes);
 
+const contactRoutes = require('./routes/ContactRoute');
+app.use('/api/contact', contactRoutes);
 
 // ------------------ Importing routes ------------------
 
