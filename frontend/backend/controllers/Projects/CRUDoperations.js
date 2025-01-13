@@ -6,39 +6,47 @@ const { HTTP_STATUS } = require('../../constants');
 const catchAsync = require('../../utils/catchAsync');
 
 const handleFileUploads = async (files, projectId) => {
-    if (files.primary_image && files.primary_image[0]) {
-        await ProjectMedia.create({
-            ProjectID: projectId,
-            primary_image: files.primary_image[0].buffer,
-            MediaType: 'Image'
-        });
-    }
-
-    if (files.additional_images) {
-        const additionalImagesPromises = files.additional_images.map(file => 
-            ProjectAdditionalMedia.create({
+    try {
+        if (files.primary_image && files.primary_image[0]) {
+            await ProjectMedia.create({
                 ProjectID: projectId,
-                additional_images: file.buffer,
+                primary_image: files.primary_image[0].buffer,
                 MediaType: 'Image'
-            })
-        );
-        await Promise.all(additionalImagesPromises);
-    }
+            });
+        }
 
-    if (files.Video && files.Video[0]) {
-        await ProjectMedia.create({
-            ProjectID: projectId,
-            Video: files.Video[0].buffer,
-            MediaType: 'Video'
-        });
-    }
+        if (files.additional_images) {
+            const additionalImagesPromises = files.additional_images.map(file => 
+                ProjectAdditionalMedia.create({
+                    ProjectID: projectId,
+                    additional_images: file.buffer,
+                    MediaType: 'Image'
+                })
+            );
+            await Promise.all(additionalImagesPromises);
+        }
 
-    if (files.Document && files.Document[0]) {
-        await ProjectMedia.create({
-            ProjectID: projectId,
-            Document: files.Document[0].buffer,
-            MediaType: 'Document'
-        });
+        if (files.Video && files.Video[0]) {
+            const videoBuffer = Buffer.from(files.Video[0].buffer);
+            await ProjectMedia.create({
+                ProjectID: projectId,
+                Video: videoBuffer,
+                MediaType: 'Video',
+                ContentType: files.Video[0].mimetype
+            });
+        }
+
+        if (files.Document && files.Document[0]) {
+            const documentBuffer = Buffer.from(files.Document[0].buffer);
+            await ProjectMedia.create({
+                ProjectID: projectId,
+                Document: documentBuffer,
+                MediaType: 'Document',
+                ContentType: files.Document[0].mimetype
+            });
+        }
+    } catch (error) {
+        throw new AppError(`File upload failed: ${error.message}`, HTTP_STATUS.INTERNAL_SERVER_ERROR);
     }
 };
 

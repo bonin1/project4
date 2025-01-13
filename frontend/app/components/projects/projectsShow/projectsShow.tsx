@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { adminAPI } from '../../../service/API';
 import './projectsShow.scss';
+import Link from 'next/link';
 
 interface Project {
     ProjectID: number;
@@ -70,8 +71,10 @@ const ProjectsShow = () => {
                                         </span>
                                     </div>
                                     <button className="view-project-btn">
-                                        View Details
-                                        <i className="bi bi-arrow-right"></i>
+                                        <Link href={`/projects/${project.ProjectID}`}>
+                                            View Details
+                                            <i className="bi bi-arrow-right"></i>
+                                        </Link>
                                     </button>
                                 </div>
                             </div>

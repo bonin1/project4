@@ -70,6 +70,18 @@ export const adminAPI = {
             };
         }
     },
+    getProjectById: async (id: string) => {
+        try {
+            const response = await API.get(`/projects/${id}`);
+            return { success: true, data: response.data };
+        } catch (error: unknown) {
+            const apiError = error as APIError;
+            return {
+                success: false,
+                error: apiError.response?.data?.message || "Failed to fetch project details"
+            };
+        }
+    },
     editProject: async (id: string, formData: FormData) => {
         try {
             const response = await API.put(`/admin/edit-project/${id}`, formData, {
