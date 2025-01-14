@@ -2,15 +2,15 @@ const sequelize = require('sequelize');
 const db = require('../database');
 const ProjectModel = require('./ProjectModel');
 
-const ProjectMedia = db.define('ProjectMedia', {
-    MediaID: {
+const ProjectVideo = db.define('ProjectVideo', {
+    VideoID: {
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    primary_image: {
+    video: { 
         type: sequelize.BLOB('long'),
-        allowNull: true
+        allowNull: false
     },
     ProjectID: {
         type: sequelize.INTEGER,
@@ -25,4 +25,4 @@ const ProjectMedia = db.define('ProjectMedia', {
     freezeTableName: true
 });
 
-module.exports = ProjectMedia;
+module.exports = ProjectVideo;

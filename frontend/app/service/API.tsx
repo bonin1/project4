@@ -97,6 +97,18 @@ export const adminAPI = {
                 error: apiError.response?.data?.message || "Failed to edit project"
             };
         }
+    },
+    deleteProject: async (id: string) => {
+        try {
+            const response = await API.delete(`/admin/delete-project/${id}`);
+            return { success: true, data: response.data };
+        } catch (error: unknown) {
+            const apiError = error as APIError;
+            return {
+                success: false,
+                error: apiError.response?.data?.message || "Failed to delete project"
+            };
+        }
     }
 };
 

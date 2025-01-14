@@ -41,8 +41,9 @@ app.use('/api/contact', contactRoutes);
 
 // ------------------ Importing routes ------------------
 
-
-
+app.get('/', (req, res) => {
+    res.render('test');
+});
 
 
 app.listen(PORT, () => {

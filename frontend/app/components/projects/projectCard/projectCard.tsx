@@ -16,13 +16,26 @@ interface ProjectCardProps {
         ProjectManager: string;
         primary_image: string;
         additional_images: { base64Image: string }[];
-        Video: string | null;
-        Document: string | null;
+        videos: { video: string }[];     
+        documents: { document: string }[];
     };
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     const [selectedImage, setSelectedImage] = useState<string>(project.primary_image);
+
+    const handleDocumentClick = (documentData: string) => {
+        const byteCharacters = atob(documentData.split(',')[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+        
+        const fileURL = window.URL.createObjectURL(blob);
+        window.open(fileURL, '_blank');
+    };
 
     const formatDate = (date: string) => new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -129,25 +142,23 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                             </div>
                         </div>
 
-                        {(project.Document || project.Video) && (
+                        {(project.documents?.length > 0 || project.videos?.length > 0) && (
                             <div className="info-card mt-4">
                                 <h3 className="card-title">
                                     <i className="bi bi-link-45deg"></i>
                                     Quick Actions
                                 </h3>
                                 <div className="action-buttons d-grid gap-3">
-                                    {project.Document && (
-                                        <a 
-                                            href={project.Document}
+                                    {project.documents?.[0]?.document && (
+                                        <button 
+                                            onClick={() => handleDocumentClick(project.documents[0].document)}
                                             className="btn btn-outline-primary"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
                                         >
                                             <i className="bi bi-file-earmark-text"></i>
                                             View Documentation
-                                        </a>
+                                        </button>
                                     )}
-                                    {project.Video && (
+                                    {project.videos?.[0]?.video && (
                                         <button 
                                             className="btn btn-outline-primary"
                                             data-bs-toggle="modal"
@@ -164,7 +175,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 </div>
             </div>
 
-            {project.Video && (
+            {project.videos?.[0]?.video && (
                 <div className="modal fade" id="videoModal" tabIndex={-1}>
                     <div className="modal-dialog modal-lg modal-dialog-centered">
                         <div className="modal-content">
@@ -173,7 +184,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div className="modal-body">
-                                <video controls src={project.Video} className="w-100">
+                                <video controls src={project.videos[0].video} className="w-100">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>

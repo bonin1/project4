@@ -8,8 +8,8 @@ interface ProjectFileInputsProps {
     existingProject?: {
         primary_image?: string | null;
         additional_images?: { base64Image: string }[];
-        Video?: string | null;
-        Document?: string | null;
+        video?: string | null;
+        document?: string | null;
     };
 }
 
@@ -92,10 +92,10 @@ export const ProjectFileInputs: React.FC<ProjectFileInputsProps> = ({
                         accept="video/*"
                         className="form-control"
                     />
-                    {existingProject?.Video && (
+                    {(imagePreviews?.video || existingProject?.video) && (
                         <div className="mt-2">
                             <video 
-                                src={existingProject.Video}
+                                src={imagePreviews?.video || existingProject?.video || ''}
                                 controls
                                 style={{ maxWidth: '100%', maxHeight: '200px' }}
                             />
@@ -112,15 +112,15 @@ export const ProjectFileInputs: React.FC<ProjectFileInputsProps> = ({
                         accept=".pdf,.doc,.docx"
                         className="form-control"
                     />
-                    {existingProject?.Document && (
+                    {(imagePreviews?.document || existingProject?.document) && (
                         <div className="mt-2">
                             <a 
-                                href={existingProject.Document}
+                                href={existingProject?.document || '#'}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-sm btn-outline-primary"
                             >
-                                View Current Document
+                                {imagePreviews?.document || 'View Current Document'}
                             </a>
                         </div>
                     )}

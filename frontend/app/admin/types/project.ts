@@ -15,13 +15,15 @@ export interface ProjectFormData {
 export interface FileState {
     primary_image: File | null;
     additional_images: File[];
-    Video: File | null;
-    Document: File | null;
+    video: File | null;
+    document: File | null;
 }
 
 export interface ImagePreviews {
     primary_image: string;
     additional_images: string[];
+    video?: string;
+    document?: string;
 }
 
 export interface Project extends Omit<ProjectFormData, 'budget'> {

@@ -20,14 +20,16 @@ const CreateProjectForm = () => {
     const [files, setFiles] = useState<FileState>({
         primary_image: null,
         additional_images: [],
-        Video: null,
-        Document: null
+        video: null,
+        document: null
     });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ type: '', content: '' });
     const [imagePreviews, setImagePreviews] = useState<ImagePreviews>({
         primary_image: '',
-        additional_images: []
+        additional_images: [],
+        video: '',
+        document: ''
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -48,29 +50,37 @@ const CreateProjectForm = () => {
                 ...prev,
                 [name]: filesArray
             }));
-            // Generate previews for additional images
             const previews = filesArray.map(file => URL.createObjectURL(file));
             setImagePreviews(prev => ({
                 ...prev,
                 additional_images: previews
             }));
         } else {
+            const file = fileList[0];
             setFiles(prev => ({
                 ...prev,
-                [name]: fileList[0]
+                [name]: file
             }));
-            // Generate preview for single file
+            
             if (name === 'primary_image') {
-                const preview = URL.createObjectURL(fileList[0]);
                 setImagePreviews(prev => ({
                     ...prev,
-                    [name]: preview
+                    [name]: URL.createObjectURL(file)
+                }));
+            } else if (name === 'Video') {
+                setImagePreviews(prev => ({
+                    ...prev,
+                    video: URL.createObjectURL(file)
+                }));
+            } else if (name === 'Document') {
+                setImagePreviews(prev => ({
+                    ...prev,
+                    document: file.name
                 }));
             }
         }
     };
 
-    // Clean up object URLs on unmount
     useEffect(() => {
         return () => {
             if (imagePreviews.primary_image) {
@@ -99,8 +109,8 @@ const CreateProjectForm = () => {
                 submitFormData.append('additional_images', file);
             });
         }
-        if (files.Video) submitFormData.append('Video', files.Video);
-        if (files.Document) submitFormData.append('Document', files.Document);
+        if (files.video) submitFormData.append('Video', files.video);
+        if (files.document) submitFormData.append('Document', files.document);
 
         try {
             const response = await adminAPI.createProject(submitFormData);
@@ -120,12 +130,14 @@ const CreateProjectForm = () => {
                 setFiles({
                     primary_image: null,
                     additional_images: [],
-                    Video: null,
-                    Document: null
+                    video: null,
+                    document: null
                 });
                 setImagePreviews({
                     primary_image: '',
-                    additional_images: []
+                    additional_images: [],
+                    video: '',
+                    document: ''
                 });
             } else {
                 setMessage({ type: 'error', content: response.error || 'Failed to create project' });

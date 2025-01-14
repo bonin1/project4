@@ -12,10 +12,6 @@ const ProjectAdditionalMedia = db.define('ProjectAdditionalMedia', {
         type: DataTypes.BLOB('long'),
         allowNull: false
     },
-    MediaType: {
-        type: DataTypes.ENUM('Image', 'Video', 'Document'),
-        allowNull: false
-    },
     ProjectID: {
         type: DataTypes.INTEGER,
         allowNull: false,

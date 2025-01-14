@@ -24,7 +24,9 @@
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         background: #fff;
-
+        opacity: 1;
+        height: auto !important;
+        
         &:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
@@ -111,7 +113,7 @@
         .view-project-btn {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.3);
-            color: white;
+            color: white ;
             padding: 0.6rem 1.2rem;
             border-radius: 25px;
             display: inline-flex;
@@ -128,6 +130,10 @@
             i {
                 font-size: 0.9rem;
                 transition: transform 0.3s ease;
+            }
+            a{
+                color: white;
+                text-decoration: none;
             }
         }
     }

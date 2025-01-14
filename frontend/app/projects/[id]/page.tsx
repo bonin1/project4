@@ -7,24 +7,43 @@ import Navbar from '../../components/globalComponents/Navbar';
 
 export default function ProjectDetails({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
-    const [data, setData] = useState({ 
+    const [data, setData] = useState<{
+        project: any;
+        loading: boolean;
+        error: string | null;
+    }>({ 
         project: null, 
         loading: true, 
         error: null 
     });
 
     useEffect(() => {
-        adminAPI.getProjectById(resolvedParams.id)
-            .then(response => {
-                if (response.success) {
-                    setData({ project: response.data, loading: false, error: null });
+        const fetchProject = async () => {
+            try {
+                const response = await adminAPI.getProjectById(resolvedParams.id);
+                if (response && response.success) {
+                    setData({ 
+                        project: response.data, 
+                        loading: false, 
+                        error: null 
+                    });
                 } else {
-                    setData({ project: null, loading: false, error: response.error });
+                    setData({ 
+                        project: null, 
+                        loading: false, 
+                        error: response?.error || 'Failed to fetch project' 
+                    });
                 }
-            })
-            .catch(() => {
-                setData({ project: null, loading: false, error: 'Failed to fetch project details' });
-            });
+            } catch (error) {
+                setData({ 
+                    project: null, 
+                    loading: false, 
+                    error: 'Failed to fetch project details' 
+                });
+            }
+        };
+
+        fetchProject();
     }, [resolvedParams.id]);
 
     if (data.loading) return <div>Loading...</div>;
@@ -36,7 +55,7 @@ export default function ProjectDetails({ params }: { params: Promise<{ id: strin
             <Navbar />
             <main className="wrapper">
                 <div className="wrapper-assist">
-                    <ProjectCard project={data.project} />;
+                    <ProjectCard project={data.project} /> {/* removed semicolon */}
                 </div>
             </main>
         </div>

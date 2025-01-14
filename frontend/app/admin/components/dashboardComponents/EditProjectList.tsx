@@ -25,8 +25,8 @@ const EditProjectList = () => {
     const [files, setFiles] = useState<FileState>({
         primary_image: null,
         additional_images: [] as File[],
-        Video: null,
-        Document: null
+        video: null,
+        document: null
     });
     const [imagePreviews, setImagePreviews] = useState({
         primary_image: '',
@@ -54,8 +54,8 @@ const EditProjectList = () => {
             setFiles({
                 primary_image: null,
                 additional_images: [],
-                Video: null,
-                Document: null
+                video: null,
+                document: null
             });
             
             setImagePreviews({
@@ -102,7 +102,7 @@ const EditProjectList = () => {
         if (!fileList) return;
 
         if (name === 'additional_images') {
-            const filesArray = Array.from(fileList).slice(0, 5) as File[];
+            const filesArray = Array.from(fileList).slice(0, 5);
             setFiles(prev => ({
                 ...prev,
                 [name]: filesArray
@@ -112,16 +112,37 @@ const EditProjectList = () => {
                 ...prev,
                 additional_images: newPreviews 
             }));
-        } else if (name === 'primary_image') {
+        } else {
             const file = fileList[0];
             setFiles(prev => ({
                 ...prev,
                 [name]: file
             }));
-            setImagePreviews(prev => ({
-                ...prev,
-                primary_image: URL.createObjectURL(file)
-            }));
+
+            if (name === 'primary_image') {
+                setImagePreviews(prev => ({
+                    ...prev,
+                    primary_image: URL.createObjectURL(file)
+                }));
+            } else if (name === 'Video') {
+                setFiles(prev => ({
+                    ...prev,
+                    video: file
+                }));
+                setImagePreviews(prev => ({
+                    ...prev,
+                    video: URL.createObjectURL(file)
+                }));
+            } else if (name === 'Document') {
+                setFiles(prev => ({
+                    ...prev,
+                    document: file
+                }));
+                setImagePreviews(prev => ({
+                    ...prev,
+                    document: file.name
+                }));
+            }
         }
     };
 
@@ -145,8 +166,8 @@ const EditProjectList = () => {
                 formData.append('additional_images', file);
             });
         }
-        if (files.Video) formData.append('Video', files.Video);
-        if (files.Document) formData.append('Document', files.Document);
+        if (files.video) formData.append('Video', files.video);
+        if (files.document) formData.append('Document', files.document);
 
         const response = await adminAPI.editProject(selectedProject.ProjectID, formData);
         if (response.success) {
@@ -155,6 +176,24 @@ const EditProjectList = () => {
             setSelectedProject(null);
         } else {
             setMessage({ type: 'error', content: response.error || 'Failed to edit project'  });
+        }
+    };
+
+    const handleDelete = async (projectId: string) => {
+        if (!window.confirm('Are you sure you want to delete this project?')) {
+            return;
+        }
+
+        try {
+            const response = await adminAPI.deleteProject(projectId);
+            if (response.success) {
+                setMessage({ type: 'success', content: 'Project deleted successfully!' });
+                fetchProjects();
+            } else {
+                setMessage({ type: 'error', content: response.error || 'Failed to delete project' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', content: 'Failed to delete project' });
         }
     };
 
@@ -192,10 +231,16 @@ const EditProjectList = () => {
                                     <td>{project.Status}</td>
                                     <td>
                                         <button 
-                                            className="btn btn-primary btn-sm"
+                                            className="btn btn-primary btn-sm me-2"
                                             onClick={() => setSelectedProject(project)}
                                         >
                                             Edit
+                                        </button>
+                                        <button 
+                                            className="btn btn-danger btn-sm"
+                                            onClick={() => handleDelete(project.ProjectID)}
+                                        >
+                                            Delete
                                         </button>
                                     </td>
                                 </tr>
