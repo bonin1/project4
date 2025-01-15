@@ -15,7 +15,8 @@ const CreateProjectForm = () => {
         Status: '',
         budget: '',
         Location: '',
-        ProjectManager: ''
+        ProjectManager: '',
+        ProjectType: ''
     });
     const [files, setFiles] = useState<FileState>({
         primary_image: null,
@@ -103,14 +104,23 @@ const CreateProjectForm = () => {
             submitFormData.append(key, value);
         });
 
-        if (files.primary_image) submitFormData.append('primary_image', files.primary_image);
+        if (files.primary_image) {
+            submitFormData.append('primary_image', files.primary_image);
+        }
+        
         if (files.additional_images.length) {
             files.additional_images.forEach(file => {
                 submitFormData.append('additional_images', file);
             });
         }
-        if (files.video) submitFormData.append('Video', files.video);
-        if (files.document) submitFormData.append('Document', files.document);
+        
+        if (files.video) {
+            submitFormData.append('Video', files.video);
+        }
+        
+        if (files.document) {
+            submitFormData.append('Document', files.document);
+        }
 
         try {
             const response = await adminAPI.createProject(submitFormData);
@@ -125,7 +135,8 @@ const CreateProjectForm = () => {
                     Status: '',
                     budget: '',
                     Location: '',
-                    ProjectManager: ''
+                    ProjectManager: '',
+                    ProjectType: ''
                 });
                 setFiles({
                     primary_image: null,

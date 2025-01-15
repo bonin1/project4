@@ -1,0 +1,55 @@
+.stats-section {
+    margin-top: 100px;
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    
+    .stats-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/construction1.jpg') center/cover no-repeat fixed;
+    }
+
+    .stats-overlay {
+        position: relative;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 6rem 2rem;
+    }
+
+    .stats-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        color: white;
+        
+        i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            -webkit-background-clip: text;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+    }
+}

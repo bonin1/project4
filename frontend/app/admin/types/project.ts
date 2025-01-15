@@ -1,4 +1,5 @@
 export type ProjectStatus = 'Planned' | 'Ongoing' | 'Completed' | 'On Hold' | 'Cancelled';
+export type ProjectType = 'Construction' | 'Renovation' | 'Architecture' | 'SmartMaintenance' | 'Tunneling' | 'Sustainable';
 
 export interface ProjectFormData {
     ProjectName: string;
@@ -7,6 +8,7 @@ export interface ProjectFormData {
     StartDate: string;
     EndDate: string;
     Status: ProjectStatus | '';
+    ProjectType: ProjectType | '';
     budget: string;
     Location: string;
     ProjectManager: string;

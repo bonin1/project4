@@ -20,7 +20,8 @@ const EditProjectList = () => {
         Status: '',
         budget: '',
         Location: '',
-        ProjectManager: ''
+        ProjectManager: '',
+        ProjectType: ''
     });
     const [files, setFiles] = useState<FileState>({
         primary_image: null,
@@ -48,7 +49,8 @@ const EditProjectList = () => {
                 Status: selectedProject.Status || '',
                 budget: selectedProject.budget ? selectedProject.budget.toString() : '',
                 Location: selectedProject.Location || '',
-                ProjectManager: selectedProject.ProjectManager || ''
+                ProjectManager: selectedProject.ProjectManager || '',
+                ProjectType: selectedProject.ProjectType || ''
             });
             
             setFiles({

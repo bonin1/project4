@@ -1,25 +1,29 @@
-const sequelize = require('sequelize');
-const db = require('../database');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
 const ProjectModel = require('./ProjectModel');
 
-const ProjectVideo = db.define('ProjectVideo', {
+const ProjectVideo = sequelize.define('ProjectVideo', {
     VideoID: {
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    video: { 
-        type: sequelize.BLOB('long'),
-        allowNull: false
-    },
     ProjectID: {
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: ProjectModel,
             key: 'ProjectID'
         },
         onDelete: 'CASCADE'
+    },
+    video: {
+        type: DataTypes.BLOB('long'),
+        allowNull: true
+    },
+    videoType: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     freezeTableName: true

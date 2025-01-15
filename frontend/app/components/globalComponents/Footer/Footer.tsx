@@ -46,7 +46,7 @@ const Footer = () => {
                         <div className="footer-section">
                             <h3>Our Services</h3>
                             <ul>
-                                <li><Link href="/services/construction">Construction</Link></li>
+                                <li><Link href="/construction">Construction</Link></li>
                                 <li><Link href="/services/renovation">Renovation</Link></li>
                                 <li><Link href="/services/architecture">Architecture</Link></li>
                                 <li><Link href="/services/interior">Interior Design</Link></li>

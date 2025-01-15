@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import './CardsContainer.scss';
 import { adminAPI } from '../../../service/API';
 
@@ -14,6 +15,7 @@ interface Project {
 }
 
 export default function CompletedProjects() {
+    const router = useRouter();
     const [completedProjects, setCompletedProjects] = useState<Project[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [cardsToShow, setCardsToShow] = useState(4);
@@ -68,6 +70,10 @@ export default function CompletedProjects() {
         return `translateX(-${(activeIndex * basePercentage) + gapOffset}%)`;
     };
 
+    const handleCardClick = (projectId: number) => {
+        router.push(`/projects/${projectId}`);
+    };
+
     return (
         <section className="completed-section">
             <h2 className="text-center mb-4">Recently Completed Projects</h2>
@@ -87,6 +93,8 @@ export default function CompletedProjects() {
                         <div 
                             key={project.ProjectID} 
                             className={`project-card ${isCardActive(index) ? 'active' : ''}`}
+                            onClick={() => handleCardClick(project.ProjectID)}
+                            style={{ cursor: 'pointer' }}
                         >
                             <div 
                                 className="card-image"

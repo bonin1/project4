@@ -7,8 +7,8 @@ const Introduction = () => {
         <section className="projects-intro">
             <div className="row align-items-center g-5">
                 <div className="col-lg-6">
-                    <h1 className="display-4 fw-bold mb-4">Building Your Vision, <span className="text-primary">Delivering Excellence</span></h1>
-                    <p className="lead mb-4">
+                    <h1 className="display-4 fw-bold mb-4 title">Building Your Vision, <span className="text-primary">Delivering Excellence</span></h1>
+                    <p className="lead mb-4 paragraph">
                         With over two decades of experience, we specialize in delivering 
                         innovative construction solutions across commercial, residential, 
                         and industrial sectors. Our commitment to quality and precision 
@@ -22,7 +22,6 @@ const Introduction = () => {
                             </span>
                         ))}
                     </div>
-                    <button className="btn btn-primary btn-lg">View Our Projects</button>
                 </div>
                 <div className="col-lg-6">
                     <div className="image-container position-relative">

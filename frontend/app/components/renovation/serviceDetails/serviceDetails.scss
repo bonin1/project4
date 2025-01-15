@@ -1,0 +1,202 @@
+.service-details {
+    padding: 4rem 2rem;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+
+    .background-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(0,123,255,0.1), rgba(0,86,179,0.1));
+            
+            &-1 {
+                width: 300px;
+                height: 300px;
+                top: -150px;
+                left: -150px;
+                animation: float 8s ease-in-out infinite;
+            }
+
+            &-2 {
+                width: 200px;
+                height: 200px;
+                top: 50%;
+                right: -100px;
+                animation: float 12s ease-in-out infinite;
+            }
+
+            &-3 {
+                width: 150px;
+                height: 150px;
+                bottom: -75px;
+                left: 50%;
+                animation: float 10s ease-in-out infinite;
+            }
+        }
+    }
+
+    .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            
+            .feature {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+                
+                h3 {
+                    color: #333;
+                    margin-bottom: 1rem;
+                }
+
+                p {
+                    color: #666;
+                    line-height: 1.5;
+                }
+            }
+        }
+        transform-origin: center center;
+        will-change: transform, opacity;
+        perspective: 1000px;
+    }
+
+    .service-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+        backdrop-filter: none;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border: 1px solid rgba(0, 123, 255, 0.1);
+
+            .icon-wrapper {
+                transform: rotate(360deg);
+                background: linear-gradient(135deg, #007bff40, #0056b340);
+                
+                .service-icon {
+                    color: #0056b3;
+                }
+            }
+
+            .feature-list li {
+                transform: translateX(10px);
+            }
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff20, #0056b320);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: all 0.6s ease;
+
+            .service-icon {
+                font-size: 2rem;
+                color: #007bff;
+            }
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .card-text {
+            color: #6c757d;
+        }
+
+        .btn-outline-primary {
+            border-width: 2px;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+
+            &:hover {
+                background-color: #007bff;
+                color: white;
+            }
+        }
+
+        .service-content {
+            text-align: left;
+            
+            .feature-list {
+                list-style: none;
+                padding-left: 0;
+                margin: 1rem 0;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 0.5rem;
+                    color: #495057;
+                    transition: transform 0.3s ease;
+
+                    .check-icon {
+                        color: #28a745;
+                        margin-right: 0.5rem;
+                        font-size: 1rem;
+                        animation: bounce 1s ease infinite;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}

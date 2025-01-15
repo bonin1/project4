@@ -4,6 +4,7 @@ import { useEffect, useState, use } from 'react';
 import { adminAPI } from '../../service/API';
 import ProjectCard from '../../components/projects/projectCard/projectCard';
 import Navbar from '../../components/globalComponents/Navbar';
+import Footer from '../../components/globalComponents/Footer/Footer';
 
 export default function ProjectDetails({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
@@ -55,9 +56,10 @@ export default function ProjectDetails({ params }: { params: Promise<{ id: strin
             <Navbar />
             <main className="wrapper">
                 <div className="wrapper-assist">
-                    <ProjectCard project={data.project} /> {/* removed semicolon */}
+                    <ProjectCard project={data.project} />
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }

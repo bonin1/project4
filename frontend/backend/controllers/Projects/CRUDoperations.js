@@ -10,36 +10,53 @@ const catchAsync = require('../../utils/catchAsync');
 
 const handleFileUploads = async (files, projectId) => {
     try {
+        const uploadPromises = [];
+
         if (files.primary_image && files.primary_image[0]) {
-            await ProjectMedia.create({
-                ProjectID: projectId,
-                primary_image: files.primary_image[0].buffer
-            });
+            uploadPromises.push(
+                ProjectMedia.create({
+                    ProjectID: projectId,
+                    primary_image: files.primary_image[0].buffer
+                })
+            );
         }
 
         if (files.additional_images) {
+            await ProjectAdditionalMedia.destroy({
+                where: { ProjectID: projectId }
+            });
+            
             const additionalImagesPromises = files.additional_images.map(file => 
                 ProjectAdditionalMedia.create({
                     ProjectID: projectId,
                     additional_images: file.buffer
                 })
             );
-            await Promise.all(additionalImagesPromises);
+            uploadPromises.push(...additionalImagesPromises);
         }
 
         if (files.Video && files.Video[0]) {
-            await ProjectVideo.create({
-                ProjectID: projectId,
-                video: files.Video[0].buffer
-            });
+            uploadPromises.push(
+                ProjectVideo.create({
+                    ProjectID: projectId,
+                    video: files.Video[0].buffer,
+                    videoType: files.Video[0].mimetype
+                })
+            );
         }
 
         if (files.Document && files.Document[0]) {
-            await ProjectDocument.create({
-                ProjectID: projectId,
-                document: files.Document[0].buffer
-            });
+            uploadPromises.push(
+                ProjectDocument.create({
+                    ProjectID: projectId,
+                    document: files.Document[0].buffer,
+                    documentType: files.Document[0].mimetype,
+                    documentName: files.Document[0].originalname
+                })
+            );
         }
+
+        await Promise.all(uploadPromises);
     } catch (error) {
         throw new AppError(`File upload failed: ${error.message}`, HTTP_STATUS.INTERNAL_SERVER_ERROR);
     }
@@ -89,7 +106,6 @@ exports.DeleteProject = catchAsync(async (req, res, next) => {
         return next(new AppError('Project not found', HTTP_STATUS.NOT_FOUND));
     }
 
-    // Delete associated media files
     await Promise.all([
         ProjectMedia.destroy({ where: { ProjectID: req.params.id } }),
         ProjectAdditionalMedia.destroy({ where: { ProjectID: req.params.id } }),
@@ -97,7 +113,6 @@ exports.DeleteProject = catchAsync(async (req, res, next) => {
         ProjectDocument.destroy({ where: { ProjectID: req.params.id } })
     ]);
 
-    // Delete the project
     await project.destroy();
 
     res.status(HTTP_STATUS.OK).json({

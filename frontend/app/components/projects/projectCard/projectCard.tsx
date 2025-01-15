@@ -23,6 +23,23 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     const [selectedImage, setSelectedImage] = useState<string>(project.primary_image);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const allImages = [project.primary_image, ...project.additional_images.map(img => img.base64Image)];
+    
+    const getCurrentImageIndex = () => allImages.indexOf(selectedImage);
+
+    const handlePrevImage = () => {
+        const currentIndex = getCurrentImageIndex();
+        const newIndex = currentIndex > 0 ? currentIndex - 1 : allImages.length - 1;
+        setSelectedImage(allImages[newIndex]);
+    };
+
+    const handleNextImage = () => {
+        const currentIndex = getCurrentImageIndex();
+        const newIndex = currentIndex < allImages.length - 1 ? currentIndex + 1 : 0;
+        setSelectedImage(allImages[newIndex]);
+    };
 
     const handleDocumentClick = (documentData: string) => {
         const byteCharacters = atob(documentData.split(',')[1]);
@@ -78,7 +95,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                 <img 
                                     src={selectedImage || project.primary_image} 
                                     alt={project.ProjectName}
+                                    onClick={() => setIsModalOpen(true)}
+                                    style={{ cursor: 'pointer' }}
                                 />
+                                <button className="nav-arrow prev" onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>
+                                    <i className="bi bi-chevron-left"></i>
+                                </button>
+                                <button className="nav-arrow next" onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>
+                                    <i className="bi bi-chevron-right"></i>
+                                </button>
                             </div>
                             <div className="thumbnails">
                                 <div 
@@ -189,6 +214,23 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                 </video>
                             </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {isModalOpen && (
+                <div className="image-modal" onClick={() => setIsModalOpen(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="close-button" onClick={() => setIsModalOpen(false)}>
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                        <button className="modal-nav-arrow prev" onClick={handlePrevImage}>
+                            <i className="bi bi-chevron-left"></i>
+                        </button>
+                        <img src={selectedImage} alt={project.ProjectName} />
+                        <button className="modal-nav-arrow next" onClick={handleNextImage}>
+                            <i className="bi bi-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             )}

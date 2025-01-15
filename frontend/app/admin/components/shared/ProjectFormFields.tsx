@@ -7,6 +7,7 @@ interface ProjectFormFieldsProps {
 }
 
 const STATUS_OPTIONS = ['Planned', 'Ongoing', 'Completed', 'On Hold', 'Cancelled'];
+const PROJECT_TYPE_OPTIONS = ['Construction', 'Renovation', 'Architecture', 'SmartMaintenance', 'Tunneling', 'Sustainable'];
 
 export const ProjectFormFields: React.FC<ProjectFormFieldsProps> = ({
     formData,
@@ -130,6 +131,24 @@ export const ProjectFormFields: React.FC<ProjectFormFieldsProps> = ({
                             {STATUS_OPTIONS.map(status => (
                                 <option key={status} value={status}>
                                     {status}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label className="form-label">Project Type</label>
+                        <select
+                            name="ProjectType"
+                            value={formData.ProjectType || ''}
+                            onChange={handleInputChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Select Project Type</option>
+                            {PROJECT_TYPE_OPTIONS.map(type => (
+                                <option key={type} value={type}>
+                                    {type}
                                 </option>
                             ))}
                         </select>

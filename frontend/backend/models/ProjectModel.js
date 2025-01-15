@@ -45,6 +45,10 @@ const Project = db.define('Project', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    ProjectType:{
+        type: DataTypes.ENUM('Construction','Renovation','Architecture','SmartMaintenance','Tunneling','Sustainable'),
+        allowNull: false
+    }
 }, {
     freezeTableName: true,
 });
