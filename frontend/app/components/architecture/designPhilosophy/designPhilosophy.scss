@@ -1,0 +1,131 @@
+.design-philosophy {
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    .container{
+        max-width: 100%;
+        padding: 0px;
+    }
+
+    .background-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+
+        h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+        }
+    }
+
+    .philosophy-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .philosophy-points {
+        .philosophy-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+
+            &:hover {
+                transform: translateX(10px);
+            }
+
+            &.active {
+                background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+                
+                .card-content {
+                    h3, p {
+                        color: white;
+                    }
+                }
+            }
+
+            .point-icon {
+                font-size: 2rem;
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                color: #2c3e50;
+                font-weight: 600;
+            }
+
+            p {
+                color: #666;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            .hover-indicator {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                background: #3498db;
+            }
+        }
+    }
+
+    .visual-showcase {
+        height: 500px;
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        transition: all 0.5s ease;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    @media (max-width: 992px) {
+        .philosophy-content {
+            grid-template-columns: 1fr;
+        }
+
+        .visual-showcase {
+            height: 300px;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 60px 0;
+
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+    }
+}

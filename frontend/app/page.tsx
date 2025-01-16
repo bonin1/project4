@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Navbar from "./components/globalComponents/Navbar";
 import ImageCarousel from "./components/Home/ImageCarousel/ImageCarousel";

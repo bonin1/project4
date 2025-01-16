@@ -1,0 +1,36 @@
+.image-header {
+    width: 100%;
+    position: relative;
+    height: 30rem;
+    background-image: url('/architecture.jpg');
+    background-size: cover;
+    background-position: center;
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        color: white;
+        padding: 2rem;
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+    }
+}

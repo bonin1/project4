@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { adminAPI } from '../../../service/API';
 import '../../../components/Home/CardsContainer/CardsContainer.scss';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Project {
     ProjectID: number;
@@ -17,16 +17,28 @@ interface Project {
 
 export default function ConstructionProjects() {
     const router = useRouter();
+    const pathname = usePathname();
     const [constructionProjects, setConstructionProjects] = useState<Project[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [cardsToShow, setCardsToShow] = useState(4);
+
+    const getProjectTypeFromPath = (path: string) => {
+        if (path.includes('/construction')) return 'Construction';
+        if (path.includes('/architecture')) return 'Architecture';
+        if (path.includes('/SmartMaintenance')) return 'SmartMaintenance';
+        if (path.includes('/Tunneling')) return 'Tunneling';
+        if (path.includes('/Sustainable')) return 'Sustainable';
+        return 'Construction';
+    };
+
+    const projectType = getProjectTypeFromPath(pathname);
 
     useEffect(() => {
         const fetchProjects = async () => {
             const response = await adminAPI.getProjects();
             if (response.success) {
                 const filtered = response.data
-                    .filter((project: Project) => project.ProjectType === 'Construction')
+                    .filter((project: Project) => project.ProjectType === projectType)
                     .sort((a: Project, b: Project) => 
                         new Date(b.EndDate).getTime() - new Date(a.EndDate).getTime()
                     );
@@ -34,7 +46,7 @@ export default function ConstructionProjects() {
             }
         };
         fetchProjects();
-    }, []);
+    }, [projectType]);
 
     useEffect(() => {
         const updateCardsToShow = () => {
@@ -77,7 +89,7 @@ export default function ConstructionProjects() {
 
     return (
         <section className="completed-section">
-            <h2 className="text-start mb-4">Construction Projects</h2>
+            <h2 className="text-start mb-4">{projectType} Projects</h2>
             
             <div className="projects-container" style={{ paddingBottom: '20px' }}>
                 {activeIndex > 0 && (
