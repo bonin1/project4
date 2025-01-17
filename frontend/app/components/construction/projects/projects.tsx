@@ -26,7 +26,7 @@ export default function ConstructionProjects() {
         if (path.includes('/construction')) return 'Construction';
         if (path.includes('/architecture')) return 'Architecture';
         if (path.includes('/SmartMaintenance')) return 'SmartMaintenance';
-        if (path.includes('/Tunneling')) return 'Tunneling';
+        if (path.includes('/tunneling')) return 'Tunneling';
         if (path.includes('/Sustainable')) return 'Sustainable';
         return 'Construction';
     };

@@ -1,0 +1,189 @@
+.services-section {
+    padding: 3rem 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a, #2d3436);
+
+    .container {
+        max-width: 100%;
+    }
+
+    .services-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(62, 184, 229, 0.1), transparent 25%),
+            radial-gradient(circle at 80% 80%, rgba(99, 88, 238, 0.1), transparent 25%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 5rem;
+        font-size: 3.2rem;
+        color: #ffffff;
+        font-weight: 700;
+        position: relative;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #3eb8e5, #6358ee);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(62, 184, 229, 0.5);
+        }
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        perspective: 1000px;
+    }
+
+    .service-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 0.5rem;
+        transform-style: preserve-3d;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(
+                var(--gradient-angle, 0deg),
+                var(--tw-gradient-from),
+                var(--tw-gradient-to)
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .card-content {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2.5rem;
+            border-radius: 20px;
+            height: 100%;
+        }
+
+        .icon-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 0 30px rgba(62, 184, 229, 0.2);
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        h3 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0; // Adjusted margin since we removed the button
+            
+            li {
+                color: rgba(255, 255, 255, 0.9);
+                margin: 0.8rem 0;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                
+                &::before {
+                    content: '○';
+                    color: var(--tw-gradient-from);
+                    margin-right: 0.8rem;
+                    font-size: 1.2rem;
+                    text-shadow: 0 0 10px var(--tw-gradient-from);
+                }
+            }
+        }
+
+        // Removed .learn-more button styles
+    }
+}
+
+@media (max-width: 768px) {
+    .services-section {
+        padding: 4rem 1rem;
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        .service-card {
+            .card-content {
+                padding: 2rem;
+            }
+        }
+    }
+}
+
+// Add gradient animation
+@property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes gradient-rotate {
+    0% {
+        --gradient-angle: 0deg;
+    }
+    100% {
+        --gradient-angle: 360deg;
+    }
+}
+
+.service-card {
+    animation: gradient-rotate 5s linear infinite;
+}
