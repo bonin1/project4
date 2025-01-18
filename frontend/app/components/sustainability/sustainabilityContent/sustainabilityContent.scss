@@ -1,0 +1,416 @@
+.sustainability-content {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+
+    .hero-section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        color: white;
+        
+        .text-block {
+            max-width: 800px;
+            padding: 0 2rem;
+            text-align: center;
+            
+            h2 {
+                font-size: 4rem;
+                margin-bottom: 1.5rem;
+                background: linear-gradient(to right, #4CAF50, #8BC34A);
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+            
+            p {
+                font-size: 1.5rem;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+    }
+
+    .parallax-section {
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        
+        .image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        .content-overlay {
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            color: white;
+            z-index: 2;
+            
+            h3 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            }
+            
+            p {
+                font-size: 1.5rem;
+                max-width: 500px;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            }
+        }
+    }
+
+    .split-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        
+        .image-side {
+            overflow: hidden;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        .text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            background: #f5f5f5;
+            
+            h3 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+                color: #333;
+            }
+            
+            p {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                color: #666;
+            }
+        }
+    }
+
+    .full-width-section {
+        height: 100vh;
+        position: relative;
+        background: #000;
+        
+        .content-container {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            
+            h2 {
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+                z-index: 2;
+            }
+            
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 3rem;
+                z-index: 2;
+            }
+            
+            .image-strip {
+                position: absolute;
+                width: 100%;
+                height: 60%;
+                overflow: hidden;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+
+    .mission-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 4rem;
+        
+        .text-content {
+            h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+                color: #333;
+            }
+            
+            p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                color: #666;
+            }
+        }
+
+        .image-container {
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+        }
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            
+            &:hover {
+                transform: translateY(-5px);
+            }
+            
+            img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+            
+            h3 {
+                padding: 1.5rem 1.5rem 0.5rem;
+                font-size: 1.5rem;
+                color: #333;
+            }
+            
+            p {
+                padding: 0 1.5rem 1.5rem;
+                color: #666;
+                line-height: 1.4;
+            }
+        }
+    }
+}
+
+.sustainability-new {
+    background: #0a0a0a;
+    color: white;
+    perspective: 1000px;
+
+    .hero-3d {
+        height: 40rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+
+        .floating-text {
+            text-align: center;
+            z-index: 2;
+
+            h1 {
+                font-size: 6rem;
+                font-weight: 800;
+                background: linear-gradient(45deg, #00ff88 0%, #00a1ff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 2rem;
+            }
+
+            .gradient-line {
+                width: 150px;
+                height: 4px;
+                margin: 0 auto;
+                background: linear-gradient(90deg, #00ff88, #00a1ff);
+                border-radius: 2px;
+            }
+        }
+    }
+
+    .perspective-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 4rem;
+        transform-style: preserve-3d;
+
+        .perspective-card {
+            height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+
+            .card-content {
+                position: relative;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+
+                .image-container {
+                    height: 70%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        filter: brightness(0.8);
+                    }
+                }
+
+                .text-content {
+                    padding: 2rem;
+                    
+                    h3 {
+                        font-size: 2rem;
+                        margin-bottom: 1rem;
+                        background: linear-gradient(45deg, #00ff88, #00a1ff);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+
+                    p {
+                        font-size: 1.1rem;
+                        color: rgba(255, 255, 255, 0.8);
+                    }
+                }
+            }
+        }
+    }
+
+    .infinite-scroll {
+        height: 100px;
+        overflow: hidden;
+        background: #000;
+        margin: 4rem 0;
+
+        .scroll-container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            .scroll-text {
+                display: flex;
+                white-space: nowrap;
+                gap: 4rem;
+
+                span {
+                    font-size: 4rem;
+                    font-weight: 800;
+                    color: rgba(255, 255, 255, 0.1);
+                    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+                }
+            }
+        }
+    }
+
+    .glass-section {
+        min-height: 40rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem;
+        background: radial-gradient(circle at bottom right, #1a1a1a 0%, #000000 100%);
+
+        .glass-card {
+            max-width: 800px;
+            padding: 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+            h2 {
+                font-size: 3.5rem;
+                margin-bottom: 2rem;
+                background: linear-gradient(45deg, #00ff88, #00a1ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            p {
+                font-size: 1.5rem;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .sustainability-content {
+        .mission-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .hero-section .text-block {
+            h2 { font-size: 2.5rem; }
+            p { font-size: 1.2rem; }
+        }
+
+        .split-section {
+            grid-template-columns: 1fr;
+            height: auto;
+        }
+
+        .parallax-section .content-overlay {
+            h3 { font-size: 2rem; }
+            p { font-size: 1.2rem; }
+        }
+    }
+
+    .sustainability-new {
+        .hero-3d .floating-text h1 {
+            font-size: 3rem;
+        }
+
+        .perspective-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .infinite-scroll .scroll-text span {
+            font-size: 2rem;
+        }
+
+        .glass-section .glass-card {
+            padding: 2rem;
+
+            h2 { font-size: 2.5rem; }
+            p { font-size: 1.2rem; }
+        }
+    }
+}
