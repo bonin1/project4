@@ -233,9 +233,10 @@ const EditProjectList = () => {
                                     <td>{project.Status}</td>
                                     <td>
                                         <button 
-                                            className="btn btn-primary btn-sm me-2"
+                                            className="btn btn-outline-primary btn-sm me-2"
                                             onClick={() => setSelectedProject(project)}
                                         >
+                                            <i className="bi bi-pencil-square me-1"></i>
                                             Edit
                                         </button>
                                         <button 

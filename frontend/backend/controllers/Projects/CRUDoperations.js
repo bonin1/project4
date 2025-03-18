@@ -13,12 +13,24 @@ const handleFileUploads = async (files, projectId) => {
         const uploadPromises = [];
 
         if (files.primary_image && files.primary_image[0]) {
-            uploadPromises.push(
-                ProjectMedia.create({
-                    ProjectID: projectId,
-                    primary_image: files.primary_image[0].buffer
-                })
-            );
+            const existingImage = await ProjectMedia.findOne({
+                where: { ProjectID: projectId }
+            });
+            
+            if (existingImage) {
+                uploadPromises.push(
+                    existingImage.update({
+                        primary_image: files.primary_image[0].buffer
+                    })
+                );
+            } else {
+                uploadPromises.push(
+                    ProjectMedia.create({
+                        ProjectID: projectId,
+                        primary_image: files.primary_image[0].buffer
+                    })
+                );
+            }
         }
 
         if (files.additional_images) {
