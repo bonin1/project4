@@ -28,6 +28,7 @@
         transition: opacity 0.8s ease, transform 1.2s ease;
         background-size: cover;
         background-position: center;
+        will-change: transform, opacity;
 
         &.active {
             opacity: 1;

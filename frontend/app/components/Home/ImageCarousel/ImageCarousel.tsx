@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { gsap } from 'gsap';
+import { animateCarouselOnScroll, animateSlideTransition } from '../../../utils/animations';
 import './ImageCarousel.scss';
 
 interface SlideContent {
@@ -38,28 +40,93 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
     showIndicators = true
 }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [previousSlide, setPreviousSlide] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const [isFirstView, setIsFirstView] = useState(true);
+    const [isAnimating, setIsAnimating] = useState(false);
     const carouselRef = useRef<HTMLDivElement>(null);
+    const slideRefs = useRef<HTMLDivElement[]>([]);
     const touchStartX = useRef<number>(0);
     const touchEndX = useRef<number>(0);
 
+    const setSlideRef = (el: HTMLDivElement | null, index: number) => {
+        if (el) {
+            slideRefs.current[index] = el;
+        }
+    };
+
+    useEffect(() => {
+        let isMounted = true;
+        
+        const timer = setTimeout(() => {
+            if (isMounted && typeof window !== 'undefined' && carouselRef.current) {
+                if (carouselRef.current) {
+                    gsap.set(carouselRef.current, { opacity: 1 });
+                }
+                
+                const cleanup = animateCarouselOnScroll(carouselRef, slideRefs.current);
+                setIsFirstView(false);
+                return cleanup;
+            }
+        }, 100);
+        
+        return () => {
+            isMounted = false;
+            clearTimeout(timer);
+        };
+    }, []);
+
+    const animateSlideChange = useCallback((from: number, to: number) => {
+        if (isAnimating || from === to || !slideRefs.current[from] || !slideRefs.current[to]) return;
+        
+        setIsAnimating(true);
+        const direction = (to > from && !(from === 0 && to === slides.length - 1)) || 
+                          (from === slides.length - 1 && to === 0) ? 1 : -1;
+        
+        const timeline = animateSlideTransition(
+            slideRefs.current[from], 
+            slideRefs.current[to], 
+            direction
+        );
+        
+        timeline.eventCallback('onComplete', () => {
+            setIsAnimating(false);
+        });
+    }, [slides.length, isAnimating]);
+
     const nextSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, [slides.length]);
+        if (isAnimating) return;
+        
+        const next = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
+        setPreviousSlide(currentSlide);
+        setCurrentSlide(next);
+        animateSlideChange(currentSlide, next);
+    }, [currentSlide, slides.length, animateSlideChange, isAnimating]);
 
     const prevSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-    }, [slides.length]);
+        if (isAnimating) return;
+        
+        const prev = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+        setPreviousSlide(currentSlide);
+        setCurrentSlide(prev);
+        animateSlideChange(currentSlide, prev);
+    }, [currentSlide, slides.length, animateSlideChange, isAnimating]);
 
-    // Handle autoplay
+    const goToSlide = useCallback((index: number) => {
+        if (isAnimating || index === currentSlide) return;
+        
+        setPreviousSlide(currentSlide);
+        setCurrentSlide(index);
+        animateSlideChange(currentSlide, index);
+    }, [currentSlide, animateSlideChange, isAnimating]);
+
     useEffect(() => {
-        if (!isAutoPlaying) return;
+        if (!isAutoPlaying || isAnimating) return;
         
         const timer = setInterval(nextSlide, autoplaySpeed);
         return () => clearInterval(timer);
-    }, [nextSlide, isAutoPlaying, autoplaySpeed]);
+    }, [nextSlide, isAutoPlaying, autoplaySpeed, isAnimating]);
 
-    // Handle keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'ArrowRight') nextSlide();
@@ -70,7 +137,6 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [nextSlide, prevSlide]);
 
-    // Handle touch events for mobile swipe
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartX.current = e.touches[0].clientX;
     };
@@ -81,11 +147,10 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
     const handleTouchEnd = () => {
         const difference = touchStartX.current - touchEndX.current;
-        if (difference > 50) nextSlide(); // Swipe left
-        if (difference < -50) prevSlide(); // Swipe right
+        if (difference > 50) nextSlide(); 
+        if (difference < -50) prevSlide();
     };
 
-    // Pause autoplay on hover
     const handleMouseEnter = () => setIsAutoPlaying(false);
     const handleMouseLeave = () => setIsAutoPlaying(true);
 
@@ -131,6 +196,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
                         className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
                         style={{ backgroundImage: `url(${slide.image})` }}
                         aria-hidden={index !== currentSlide}
+                        ref={(el) => setSlideRef(el, index)}
                     >
                         <div className="slide-overlay"></div>
                         {slide.content && (
@@ -151,7 +217,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
                         <button
                             key={index}
                             className={`indicator ${index === currentSlide ? 'active' : ''}`}
-                            onClick={() => setCurrentSlide(index)}
+                            onClick={() => goToSlide(index)}
                             aria-label={`Go to slide ${index + 1}`}
                             aria-current={index === currentSlide}
                         />

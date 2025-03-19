@@ -15,6 +15,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@types/three": "^0.172.0",
+    "aos": "^2.3.4",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",

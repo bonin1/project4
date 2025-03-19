@@ -1,11 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import './Services.scss';
 
 const Services = () => {
     const router = useRouter();
+    
+    useEffect(() => {
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true,
+            easing: 'ease-out-cubic'
+        });
+    }, []);
+    
     const services = [
         {
             icon: 'bi bi-buildings',
@@ -60,7 +72,7 @@ const Services = () => {
     return (
         <section className="services-section">
             <div className="container">
-                <div className="section-header">
+                <div className="section-header" data-aos="fade-up">
                     <span className="pre-title">Our Expertise</span>
                     <h2>Comprehensive Construction Solutions</h2>
                     <p className="section-description">
@@ -71,7 +83,12 @@ const Services = () => {
                 
                 <div className="services-grid">
                     {services.map((service, index) => (
-                        <div key={index} className={`service-card ${service.gradient}`}>
+                        <div 
+                            key={index} 
+                            className={`service-card ${service.gradient}`}
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                        >
                             <div className="card-content">
                                 <div className="icon-wrapper">
                                     <i className={service.icon}></i>
