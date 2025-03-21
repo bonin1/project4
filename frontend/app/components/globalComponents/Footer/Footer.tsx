@@ -115,25 +115,25 @@ const Footer = () => {
                                     <div className="icon-container">
                                         <i className="bi bi-geo-alt"></i>
                                     </div>
-                                    <span>123 Main Str<br/>Kodrali City, Kosovo</span>
+                                    <span>123 Main Str<br/>Kosovo</span>
                                 </li>
                                 <li className="contact-item">
                                     <div className="icon-container">
                                         <i className="bi bi-telephone"></i>
                                     </div>
-                                    <span>+383 49 100 100</span>
+                                    <span>+383 49 116 895</span>
                                 </li>
                                 <li className="contact-item">
                                     <div className="icon-container">
                                         <i className="bi bi-envelope"></i>
                                     </div>
-                                    <span>contact@best2.com</span>
+                                    <span>info@tebotronic.com</span>
                                 </li>
                                 <li className="contact-item">
                                     <div className="icon-container">
                                         <i className="bi bi-clock"></i>
                                     </div>
-                                    <span>Mon - Fri: 8:00 AM - 6:00 PM</span>
+                                    <span>Mon - Sun: 8:00 AM - 6:00 PM</span>
                                 </li>
                             </ul>
                         </motion.div>
